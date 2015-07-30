@@ -4,9 +4,9 @@
 JavaScript wrapper for CSS3 animation events. Allows for composing/extending animations on the fly. Combine with Animate.css for tons of fun!
 
 ### Dependencies
-Requires jQuery and [caolan/async](https://github.com/caolan/async).
+Requires jQuery (for now) and [caolan/async](https://github.com/caolan/async).
 
-Got bower? `bower install mondorobot/waltjs`
+Got bower? `bower install andymikulski/walt`
 
 
 ### Usage
