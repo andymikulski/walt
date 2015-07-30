@@ -54,7 +54,7 @@ superCoolFade.animate();
 
 ### Usage Explained
 
-First step is to create an animation composition. There are default animation options, but those can be overridden. 
+First step is to create an animation composition. There are default animation options, but those can be overridden.
 
 ```
 var fadeInYourDiv = new Walt().target('#your-div').name('fadeIn').duration(2500);
@@ -66,7 +66,7 @@ Calling `animate` triggers the animation to begin.
 
 
 Composing animations allows you to create one 'definition' and vary or apply as necessary to other elements.
-You can `fork` animations to create variations of existing compositions, and use `target` to set the element(s) 
+You can `fork` animations to create variations of existing compositions, and use `target` to set the element(s)
 
 ```
 var superCoolFade = new Walt()
@@ -122,7 +122,7 @@ new Walt()
   .duration(1000) // animation speed (in ms)
   .delay(1000) // animation delay (in ms)
   .count(3) // how many anims to play (default 1)
-  .fill('forwards') // fill mode 
+  .fill('forwards') // fill mode
   .timing('cubic-bezier(0.86, 0, 0.07, 1)')
   // walt also provides timing easings
   .timing(Walt.prototype.easings.easeInOutQuint)
@@ -190,3 +190,13 @@ new Walt().target('#yourelement').name('fadeInUp').animate();
 ```
 
 **Please note** the legacy-style format does not currently support all of Walt 2.x's features, nor are there any current plans for supporting this format further in the future.
+
+
+===
+
+
+### Credits
+
+Developed by [Andy Mikulski](http://www.andymikulski.com/) while working for [Mondo Robot](http://www.mondorobot.com/) in Boulder, CO.
+
+Thanks to [Daniel Eden](https://daneden.me/) for making [Animate.css](https://daneden.github.io/animate.css/), which inspired this project.
