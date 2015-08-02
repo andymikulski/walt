@@ -125,7 +125,6 @@ new Walt()
 
   // animation creation helper functions
   .fork() // ** clone animation definition with current settings **
-  .children() // select the current target's children
 
   // you can also add before/after functions to fire before/after the animation
   .before(function($el, settings){ console.log('before anim starts'); })
