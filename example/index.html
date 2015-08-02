@@ -64,14 +64,29 @@
                 .name('fadeInUp')
                 .duration(2500)
             // timings are provided right on the Walt object
-                .timing(Walt.ease.inOut.quint)
-                .animate();
+                .timing(Walt.ease.inOut.quint);
 
+
+            // set up the animation for our kids...
+            var childAnim = new Walt()
+                .name('fadeInLeft')
+                .duration(2000)
+                .timing(Walt.ease.inOut.back);
+
+            // you can retrieve values by not passing parameters
+            superCoolFade
+                .target() // get the target in jQuery form
+                .children() // now a jQuery operation
+                .each(function(i,el){ // still jquery
+                    // use the child anim here
+                    childAnim.fork().target(el).delay((i+1) * 250).animate();
+                });
 
             // ..oh and animations only start when you want them to
             superCoolFade.animate();
             // keep in mind this only triggers our inital animation;
             // forked instances need to be triggered separately
+
 
 
             // now featuring Walt 1.x support!

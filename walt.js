@@ -1,4 +1,3 @@
--
 /*!
  * WaltJS 2.0
  * @author Andy Mikulski <andy@mondorobot.com>
@@ -106,12 +105,14 @@
             'target': function($el) {
                 var anim = this;
 
+                if (typeof $el === 'undefined') {
+                    return anim.settings.element;
+                }
+
                 if ($el) {
                     $el = !($el instanceof $) ? $($el) : $el;
                     anim.settings.element = $el;
                     return anim;
-                } else {
-                    return anim.settings.element || $();
                 }
             },
 
@@ -122,10 +123,14 @@
              * @param  {string}   Name of CSS Animation
              * @return {Walt}     This Walt animation instance
              */
-            'name': function(name) {
+            'name': function(value) {
                 var anim = this;
 
-                anim.settings.animation = name;
+                if (typeof value === 'undefined') {
+                    return anim.settings.animation;
+                }
+
+                anim.settings.animation = value;
 
                 return anim;
             },
@@ -139,6 +144,10 @@
              */
             'fill': function(value) {
                 var anim = this;
+
+                if (typeof value === 'undefined') {
+                    return anim.settings.fill;
+                }
 
                 anim.settings.fill = value || 'none';
 
@@ -155,6 +164,10 @@
             'direction': function(value) {
                 var anim = this;
 
+                if (typeof value === 'undefined') {
+                    return anim.settings.direction;
+                }
+
                 anim.settings.direction = value || 'forward';
 
                 return anim;
@@ -169,6 +182,10 @@
              */
             'timing': function(value) {
                 var anim = this;
+
+                if (typeof value === 'undefined') {
+                    return anim.settings.timing;
+                }
 
                 anim.settings.timing = value || 'linear';
 
@@ -185,6 +202,10 @@
             'duration': function(value) {
                 var anim = this;
 
+                if (typeof value === 'undefined') {
+                    return anim.settings.duration;
+                }
+
                 anim.settings.duration = convertToCSSTime(value);
 
                 return anim;
@@ -199,6 +220,10 @@
             'delay': function(value) {
                 var anim = this;
 
+                if (typeof value === 'undefined') {
+                    return anim.settings.delay;
+                }
+
                 anim.settings.delay = convertToCSSTime(value);
 
                 return anim;
@@ -212,6 +237,10 @@
              */
             'count': function(value) {
                 var anim = this;
+
+                if (typeof value === 'undefined') {
+                    return anim.settings.count;
+                }
 
                 anim.settings.count = value;
 
@@ -239,6 +268,10 @@
             'before': function(onBeforeFnc) {
                 var anim = this;
 
+                if (!onBeforeFnc) {
+                    return anim.onBefores;
+                }
+
                 // gotta wrap it in a callback thing since we'll async it later
                 anim.onBefores.push(function(callback) {
                     onBeforeFnc && onBeforeFnc(anim.settings.element, anim.settings);
@@ -258,6 +291,10 @@
             'beforeEach': function(onBeforeEachFnc) {
                 var anim = this;
 
+                if (!onBeforeEachFnc) {
+                    return anim.onBeforeEaches;
+                }
+
                 // gotta wrap it in a callback thing since we'll async it later
                 anim.onBeforeEaches.push(function(callback) {
                     onBeforeEachFnc && onBeforeEachFnc(anim.settings.element, anim.settings);
@@ -276,6 +313,10 @@
              */
             'after': function(onAfterFnc) {
                 var anim = this;
+
+                if (!onAfterFnc) {
+                    return anim.onAfters;
+                }
 
                 // gotta wrap it in a callback thing since we'll async it later
                 anim.onAfters.push(function(callback) {
@@ -319,6 +360,10 @@
              */
             'afterEach': function(onAfterEachFnc) {
                 var anim = this;
+
+                if (!onAfterEachFnc) {
+                    return anim.onAfterEaches;
+                }
 
                 // gotta wrap it in a callback thing since we'll async it later
                 anim.onAfterEaches.push(function(callback) {
