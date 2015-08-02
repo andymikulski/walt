@@ -30,15 +30,6 @@ superCoolFade
     .duration(5000)
     .animate();
 
-// targeting children but with the same animation definition
-superCoolFade
-    .fork()
-    .target('#test3')
-    .name('fadeInUp')
-    .children()
-    .duration(2500)
-    .animate();
-
 // currently to stagger child delays etc,
 // you have to loop via jquery or something
 $('#test4').children().each(function(i,v){
@@ -149,24 +140,27 @@ new Walt()
 
 ### Easings
 
-Walt comes pre-packaged with [easings](http://easings.net), accessed via `Walt.prototype.easings`:
+Walt comes pre-packaged with [easings](http://easings.net) to use with the `.timing()` function.
 
-```
-linear,
-ease,
-easeIn,
-easeOut,
-easeInOut,
 
-easeInQuad, easeOutQuad, easeInOutQuad,
-easeInCubic, easeOutCubic, easeInOutCubic,
-easeInQuart, easeOutQuart, easeInOutQuart,
-easeInQuint, easeOutQuint, easeInOutQuint,
-easeInSine, easeOutSine, easeInOutSine,
-easeInExpo, easeOutExpo, easeInOutExpo,
-easeInCirc, easeOutCirc, easeInOutCirc,
-easeInBack, easeOutBack, easeInOutBack
-```
+"Defaults" are provided under `Walt.ease.defaults` :
+- linear
+- ease
+- easeIn
+- easeOut
+- easeInOut
+
+More exact timings are present under and `Walt.ease.in`, `Walt.ease.out`, and `Walt.ease.inOut` objects:
+- quad
+- cubic
+- quart
+- quint
+- sine
+- expo
+- circ
+- back
+
+ex: `..timing(Walt.ease.in.quint)..`
 
 
 ===
