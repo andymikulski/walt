@@ -114,9 +114,11 @@ new Walt()
   .delay(1000) // animation delay (in ms)
   .count(3) // how many anims to play (default 1)
   .fill('forwards') // fill mode
+  
+  // custom timings are available,
   .timing('cubic-bezier(0.86, 0, 0.07, 1)')
-  // walt also provides timing easings
-  .timing(Walt.prototype.easings.easeInOutQuint)
+  // and walt provides timing easings built-in
+  .timing(Walt.ease.inOut.quint)
 
   // there are some control functions
   .pause() // pauses animation
@@ -124,7 +126,7 @@ new Walt()
   .play() // resumes/plays an animation
 
   // animation creation helper functions
-  .fork() // ** clone animation definition with current settings **
+  .fork() // clone animation definition with current settings
 
   // you can also add before/after functions to fire before/after the animation
   .before(function($el, settings){ console.log('before anim starts'); })
