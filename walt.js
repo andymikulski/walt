@@ -684,9 +684,5 @@
     // Shortcut to Walt's provided easings
     window.Walt.easings = window.Walt.ease = window.Walt.prototype.easings;
 
-    // heck yeah mondo namespace
-    window.mondo = window.mondo || {};
-    window.mondo.Walt = window.Walt;
-
 
 })(window, document, jQuery, async);
