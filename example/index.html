@@ -44,8 +44,8 @@
               .name('fadeInUp')
               .duration(250)
               .delay(1000)
-              .target('#test1');
-
+              .target('#test1')
+              .animate();
             // we can fork the base animation and alter that instance
             // so we fork and have an animation with 250 duration and 1000 delay targeting #test1
             // (and whatever the defaults are for the other options)
@@ -66,21 +66,21 @@
             // timings are provided right on the Walt object
                 .timing(Walt.ease.inOut.quint);
 
-
             // set up the animation for our kids...
             var childAnim = new Walt()
                 .name('fadeInLeft')
                 .duration(2000)
-                .timing(Walt.ease.inOut.back);
+                .timing(Walt.ease.inOut.back)
+                .animate();
 
             // you can retrieve values by not passing parameters
-            superCoolFade
-                .target() // get the target in jQuery form
-                .children() // now a jQuery operation
-                .each(function(i,el){ // still jquery
+            // superCoolFade
+                // .target($) // get the target in jQuery form
+                // .children() // now a jQuery operation
+                // .each(function(i,el){ // still jquery
                     // use the child anim here
-                    childAnim.fork().target(el).delay((i+1) * 250).animate();
-                });
+                    // childAnim.fork().target(el).delay((i+1) * 250).animate();
+                // });
 
             // ..oh and animations only start when you want them to
             superCoolFade.animate();
@@ -106,7 +106,6 @@
                 .duration(500)
                 .delay(250)
                 .animate();
-
         </script>
     </body>
 </html>

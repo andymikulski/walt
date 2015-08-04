@@ -1,9 +1,9 @@
 /*!
- * WaltJS 2.0
- * @author Andy Mikulski <andy@mondorobot.com>
+ * WaltJS 2.1
+ * @author Andy Mikulski <andy.mikulski@gmail.com>
  */
 ;
-(function(window, document, $, async, undefined) {
+(function(window, document, async, undefined) {
 
     /**
      * The Walt object.
@@ -63,6 +63,7 @@
 
             return {
                 '-webkit-animation': cssString || '',
+                'webkitAnimation': cssString || '',
                 'animation': cssString || ''
             };
         }
@@ -71,7 +72,7 @@
         Walt.prototype = {
             // default animation settings
             'defaults': {
-                'element': $(document.body || document.documentElement),
+                'element': document.body || document.documentElement,
                 'animation': 'fadeIn',
                 'delay': '0s',
                 'duration': '1s',
@@ -99,21 +100,34 @@
             /**
              * Sets the current animation's element target
              * 
-             * @param  {jQuery|Element}   Element to apply the animation to
+             * @param  {Element}   Element to apply the animation to
              * @return {Walt}             This Walt animation instance
              */
-            'target': function($el) {
+            'target': function(targetEl) {
                 var anim = this;
 
-                if (typeof $el === 'undefined') {
+                // if something is passed in..
+                if (typeof targetEl !== 'undefined') {
+
+                    // and it's a string, we'll assume it's a selector
+                    if (typeof targetEl === 'string') {
+                        anim.settings.element = document.querySelectorAll(targetEl);
+                        // if it's a function, we'll assume they actually
+                        // want the element, wrapped in whatever they passed in
+                        // (e.g. jQuery)
+                    } else if (typeof targetEl === 'function') {
+                        return targetEl(anim.settings.element);
+                        // neither of the above then it's just an element
+                        // (kind of boldly assuming here)
+                    } else {
+                        anim.settings.element = targetEl;
+                    }
+                } else {
+                    // empty args = just return raw element
                     return anim.settings.element;
                 }
 
-                if ($el) {
-                    $el = !($el instanceof $) ? $($el) : $el;
-                    anim.settings.element = $el;
-                    return anim;
-                }
+                return anim;
             },
 
 
@@ -450,9 +464,9 @@
              * @return {Walt}                 New Walt animation instance
              */
             'fork': function(eventsToo) {
-                var anim = this;
+                var anim = this,
+                    newGuy = new Walt();
 
-                var newGuy = new Walt();
                 for (var prop in anim) {
                     if (!eventsToo && (prop === 'onBefores' || prop === 'onAfters' || prop === 'onBeforeEaches' || prop === 'onAfterEaches')) {
                         // ok
@@ -478,17 +492,29 @@
 
                 var settings = anim.settings,
                     // create an animation shorthand string
-                    cssString = settings.animation + ' ' + settings.duration + ' ' + settings.timing + ' ' + settings.delay + ' ' + settings.count + ' ' + settings.direction + ' ' + settings.fill + ' ' + settings.state;
+                    cssString = settings.animation + ' ' + settings.duration + ' ' + settings.timing + ' ' + settings.delay + ' ' + settings.count + ' ' + settings.direction + ' ' + settings.fill + ' ' + settings.state,
+                    elements = anim.settings.element;
 
 
                 // create a count of how many elements we should be watching out for
                 anim.animCount = 0;
-                anim.animMax = anim.settings.element.length;
+                anim.animMax = elements.length;
 
-                // bind the animation end handler
-                anim.settings.element.unbind('animationend.walt').on('animationend.walt', anim._onAnimEndEvent.bind(anim));
-                // trigger the animation!
-                anim.settings.element.css(_createCssObj(cssString));
+                var computedCSS = _createCssObj(cssString);
+
+                for (var i = elements.length - 1; i >= 0; i--) {
+                    var el = elements[i];
+
+                    // bind the animation end handler
+                    el.removeEventListener('animationend', anim._onAnimEndEvent.bind(anim), false);
+                    el.addEventListener('animationend', anim._onAnimEndEvent.bind(anim), false);
+
+
+                    // apply the CSS and trigger the animation
+                    for (var rule in computedCSS) {
+                        el.style[rule] = computedCSS[rule];
+                    }
+                };
 
                 return anim;
             },
@@ -501,12 +527,17 @@
              */
             '_onAnimEndEvent': function(event) {
                 var anim = this,
-                    $target = $(event.currentTarget);
+                    target = event.currentTarget;
 
-                $target.unbind('animationend.walt');
+                target.removeEventListener('animationend', anim._onAnimEndEvent.bind(anim), false);
+                // $target.unbind('animationend.walt');
 
                 // reset the target css by just passing in null values for the properties
-                $target.css(_createCssObj());
+                // $target.css(_createCssObj());
+                var computedCSS = _createCssObj();
+                for (var rule in computedCSS) {
+                    target.style[rule] = computedCSS[rule];
+                }
 
                 // up the 'completed' count
                 anim.animCount += 1;
@@ -538,7 +569,14 @@
                     delete anim.animMax;
 
                     // reset the css by just passing in null values for the properties
-                    anim.settings.element.css(_createCssObj());
+                    // anim.settings.element.css(_createCssObj());
+                    var computedCSS = _createCssObj(),
+                        el = anim.settings.element;
+
+                    console.log('anim', el);
+                    for (var rule in computedCSS) {
+                        el.style[rule] = computedCSS[rule];
+                    }
                 });
 
                 return anim;
@@ -685,4 +723,4 @@
     window.Walt.easings = window.Walt.ease = window.Walt.prototype.easings;
 
 
-})(window, document, jQuery, async);
+})(window, document, async);
