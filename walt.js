@@ -679,7 +679,7 @@
                 for (var i = 0; i < ss.length; ++i) {
                     if (ss[i].cssRules) {
                         for (var j = 0; j < ss[i].cssRules.length; ++j) {
-                            if ((ss[i].cssRules[j].type == window.CSSRule.WEBKIT_KEYFRAMES_RULE || ss[i].cssRules[j].type == window.CSSRule.KEYFRAMES_RULE) && ss[i].cssRules[j].name == rule) {
+                            if ((ss[i].cssRules[j].type == window.CSSRule.WEBKIT_KEYFRAMES_RULE || ss[i].cssRules[j].type == window.CSSRule.MOZ_KEYFRAMES_RULE || ss[i].cssRules[j].type == window.CSSRule.KEYFRAMES_RULE) && ss[i].cssRules[j].name == rule) {
                                 return ss[i].cssRules[j];
                             }
                         }
