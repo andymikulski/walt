@@ -163,6 +163,16 @@ new Walt()
   // and want a handler per-item
   .beforeEach(function($el, settings){ console.log('before each individual anim starts'); })
   .afterEach(function($el, settings){ console.log('after each individual anim ends'); })
+
+
+  // for multiple animations simultaneously
+  .compose('yourNewAnimName', 'animToMerge1 otherAnim andSoOn');
+
+
+// Non-instanced functions
+Walt.compose('animName', 'anim1 anim2'); // merges and registers a new keyframed animation.
+Walt.getKeyframes('animName'); // returns an object of keyframe data for the specified animation
+Walt.animate(...) // used for 1.x-style animation (not grealty supported)
 ```
 
 
