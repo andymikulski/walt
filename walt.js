@@ -1,6 +1,6 @@
 /*!
- * WaltJS 2.0
- * @author Andy Mikulski <andy@mondorobot.com>
+ * WaltJS 2.1
+ * @author Andy Mikulski <github.com/andymikulski>
  */
 ;
 (function(window, document, $, async, undefined) {
@@ -668,6 +668,183 @@
                 } else {
                     return anim;
                 }
+            },
+
+
+            '_findKeyframesRule': function(rule) {
+                var ss = document.styleSheets;
+                if (!ss) {
+                    return null;
+                }
+                for (var i = 0; i < ss.length; ++i) {
+                    if (ss[i].cssRules) {
+                        for (var j = 0; j < ss[i].cssRules.length; ++j) {
+                            if ((ss[i].cssRules[j].type == window.CSSRule.WEBKIT_KEYFRAMES_RULE || ss[i].cssRules[j].type == window.CSSRule.KEYFRAMES_RULE) && ss[i].cssRules[j].name == rule) {
+                                return ss[i].cssRules[j];
+                            }
+                        }
+                    }
+                }
+                return null;
+            },
+
+            'isNumber': function(val) {
+                return (!isNaN(parseFloat(val)) && isFinite(val));
+            },
+
+            '_findAnimationKeyframes': function(animations) {
+                // array of the animations to analyze later
+                var anim = this,
+                    foundAnimations = [],
+                    tempKeyframes;
+
+                // allow for space-delineation
+                animations = animations.split(' ');
+                for (var i = 0; i < animations.length; i++) {
+                    // need to make sure that keyframes actually exists
+                    tempKeyframes = anim._findKeyframesRule(animations[i]);
+
+                    // if the keyframes dont come back as null,
+                    // that means that something was found
+                    if (tempKeyframes) {
+                        foundAnimations.push(tempKeyframes);
+                    }
+                }
+
+                return foundAnimations;
+            },
+
+            '_mergeAnimationKeyframes': function(animationCollection) {
+                var anim = this,
+                    compiledAnimation = {},
+                    // tons of loop varaibles and stuff
+                    currentAnimation,
+                    thisFrame,
+                    frame,
+                    k,
+                    existingFrame,
+                    frameStyle,
+                    keyText;
+
+                for (var j = 0; j < animationCollection.length; j++) {
+
+                    currentAnimation = animationCollection[j];
+
+                    // for each frame int he found animation
+                    if (currentAnimation && currentAnimation.cssRules) {
+                        for (thisFrame in currentAnimation.cssRules) {
+
+                            if (thisFrame && currentAnimation[thisFrame]) {
+                                // get the corresponding keyframe %
+                                frame = currentAnimation[thisFrame];
+                                keyText = frame.keyText.split(',');
+
+
+                                for (k = keyText.length - 1; k >= 0; k--) {
+                                    // and see if an existing keyframe exists
+                                    existingFrame = compiledAnimation[keyText[k]] || {};
+
+                                    // for each frame we need to check the CSS style and save any relevant changes
+                                    for (frameStyle in frame.style) {
+                                        if (typeof frame.style[frameStyle] === 'string' && frame.style[frameStyle] !== '' && frameStyle !== 'cssText' && frameStyle !== 'length' && !anim.isNumber(frameStyle)) {
+
+                                            if (existingFrame[frameStyle] && existingFrame[frameStyle] !== '') {
+                                                if (anim.isNumber(existingFrame[frameStyle])) {
+                                                    existingFrame[frameStyle] = Number(existingFrame[frameStyle]) + Number(frame.style[frameStyle]);
+                                                } else {
+                                                    // combining a string-based attribute
+                                                    if (frameStyle.toLowerCase().indexOf('transform') > -1) {
+                                                        // if it's a transform we need to do some weird stuff to it
+                                                        var transformStyle = existingFrame[frameStyle].split(' ');
+                                                    }
+
+                                                    existingFrame[frameStyle] += frame.style[frameStyle];
+                                                }
+                                            }
+                                            existingFrame[frameStyle] = frame.style[frameStyle];
+                                        }
+                                    }
+                                    compiledAnimation[keyText[k]] = existingFrame;
+                                };
+
+                            }
+                        }
+                    }
+                }
+
+                return compiledAnimation;
+            },
+
+            'compose': function(newAnimationName, animations, returnString) {
+                if (!animations) {
+                    console && console.warn && console.warn('Walt : compose : two arguments are required');
+                    return anim;
+                }
+                var anim = this,
+                    // find the relevant keyframes amongst our stylesheets
+                    foundAnimations = anim._findAnimationKeyframes(animations);
+
+                // if there aren't any animations just return out
+                if (!foundAnimations || !foundAnimations.length) {
+                    console && console.warn && console.warn('Walt : compose : no animations found', animations);
+                    return;
+                }
+
+                var mergedAnimations = anim._mergeAnimationKeyframes(foundAnimations),
+                    animationString = anim._objectToAnimationString(newAnimationName, mergedAnimations);
+
+                if (returnString) {
+                    return animationString;
+                } else {
+                    anim.settings.animation = newAnimationName;
+                    return anim;
+                }
+            },
+
+            '_objectToAnimationString': function(newAnimName, animObject) {
+                var anim = this,
+                    animString = '';
+                for (var keyframe in animObject) {
+                    animString += '\t' + keyframe + '{ \n';
+                    for (var style in animObject[keyframe]) {
+                        animString += '\t\t' + style + ': ' + animObject[keyframe][style] + ';\n'
+                    }
+                    animString += '\t} \n';
+                }
+
+                var prefixes = ['@', '@-webkit-'],
+                    baseCSS = 'keyframes ' + newAnimName + ' { \n' + animString + '\n}',
+                    allToApply = [];
+
+                for (var i = prefixes.length - 1; i >= 0; i--) {
+                    allToApply.push(prefixes[i] + baseCSS);
+                };
+
+                // actually insert the generated rules into a stylesheet
+                anim._insertNewRules(allToApply);
+
+                return allToApply.join('\n\n');
+            },
+
+            '_insertNewRules': function(rulesToApply) {
+                var ss = document.styleSheets;
+                if (!ss) {
+                    return false;
+                }
+
+                // grab the last one
+                // (since we want it to be at the bottom of everything,
+                // in case there's a precedence issue (which in itself
+                // should probably be fixed in the future))
+                var lastSS = ss[ss.length - 1];
+
+                // loop through the rules to apply (prefixed keyframes)
+                // and insert as necessar
+                for (var i = rulesToApply.length - 1; i >= 0; i--) {
+                    lastSS.insertRule(rulesToApply[i], 0);
+                }
+
+                return true;
             }
         };
 
@@ -683,6 +860,18 @@
 
     // Shortcut to Walt's provided easings
     window.Walt.easings = window.Walt.ease = window.Walt.prototype.easings;
+
+    // Shortcut to getting merged animation keyframes
+    window.Walt.compose = function(newName, animations) {
+        return new Walt().compose(newName, animations, true);
+    };
+
+    // Shortcut to getting an keyframe object for an animation
+    window.Walt.getKeyframes = function(animName) {
+        var keyFramer = new Walt();
+
+        return keyFramer._mergeAnimationKeyframes(keyFramer._findAnimationKeyframes(animName));
+    };
 
 
 })(window, document, jQuery, async);
