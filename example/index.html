@@ -32,6 +32,12 @@
 
             <div id="test5">Old and busted</div>
             <div id="test6">New hotness</div>
+            
+
+
+            <div id="test7">One element, multiple animations!</div>
+
+
 
         </section>
 
@@ -106,6 +112,21 @@
                 .duration(500)
                 .delay(250)
                 .animate();
+
+
+            // Composing animations on the fly is ez-pz
+            var ourMergedAnimation = new Walt()
+                // using `compose`, we can merge existing keyframed animations
+                // in order to play multiple animations on one element at a time
+                .compose('yourCoolAnimation', 'fadeIn rubberBand')
+                .count('infinite')
+                .direction('alternate')
+                .duration(5000)
+                .target('#test7')
+                .animate();
+
+            // Want to see what the keyframes look like? easy!
+            console && console.log('Your cool generated animation:', Walt.getKeyframes('yourCoolAnimation'));
 
         </script>
     </body>
