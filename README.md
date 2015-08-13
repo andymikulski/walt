@@ -1,4 +1,4 @@
-# WaltJS
+# WaltJS 2.1
 ## Composable CSS3 Animation Manager
 
 JavaScript wrapper for CSS3 animation events. Allows for composing/extending animations on the fly. Combine with Animate.css for tons of fun!
@@ -103,6 +103,33 @@ yourAnimation.then(yourOtherAnimation.animate.bind(yourOtherAnimation)).animate(
 ```
 
 
+
+### Playing + composing multiple animations on the fly
+
+An ambitious effort in creating Walt is the ability play multiple animations on an element at once. This is proving tricky, but we're getting there.
+
+```
+// using a typical Walt animation boject..
+var ourMergedAnimation = new Walt().compose('yourCoolAnimation', 'fadeIn rubberBand');
+```
+Compose takes a name to identify the new animation as, and a space-delineated string of animations to merge together (to create the new animation).
+
+After `compose`-ing, your generated animation will be created and embedded into the page, and the current animation object will set itself to play it.
+
+Alternatively, you can request Walt to merge and embed a new animation onto the page _without_ needing to create a new Walt object:
+
+```
+var newAnimation = Walt.compose('yourObjectlessAnimation', 'oneAnimation anotherAnimation aaaandAnother');
+// this registers the new animation, and returns the compiled CSS keyframe string.
+```
+
+Walt also allows easy-access to viewing keyframe information about animations. Calling `getKeyframes` will return an object of keyframes and their respective style changes.
+
+```
+console.log('Your cool generated animation:', Walt.getKeyframes('yourCoolAnimation'));
+```
+
+
 ### List of Available Functions
 
 
@@ -192,6 +219,6 @@ new Walt().target('#yourelement').name('fadeInUp').animate();
 
 ### Credits
 
-Developed by [Andy Mikulski](http://www.andymikulski.com/) while working for [Mondo Robot](http://www.mondorobot.com/) in Boulder, CO.
+Developed by [Andy Mikulski](http://www.andymikulski.com/).
 
 Thanks to [Daniel Eden](https://daneden.me/) for making [Animate.css](https://daneden.github.io/animate.css/), which inspired this project.
