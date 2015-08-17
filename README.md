@@ -109,7 +109,7 @@ yourAnimation.then(yourOtherAnimation.animate.bind(yourOtherAnimation)).animate(
 An ambitious effort in creating Walt is the ability play multiple animations on an element at once. This is proving tricky, but we're getting there.
 
 ```
-// using a typical Walt animation boject..
+// using a typical Walt animation object..
 var ourMergedAnimation = new Walt().compose('yourCoolAnimation', 'fadeIn rubberBand');
 ```
 Compose takes a name to identify the new animation as, and a space-delineated string of animations to merge together (to create the new animation).
