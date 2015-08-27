@@ -118,10 +118,11 @@
             var ourMergedAnimation = new Walt()
                 // using `compose`, we can merge existing keyframed animations
                 // in order to play multiple animations on one element at a time
-                .compose('yourCoolAnimation', 'fadeIn rubberBand')
+                .compose('yourCoolAnimation', 'rotateIn zoomIn collllor collllor2 fadeIn')
                 .count('infinite')
-                .direction('alternate')
-                .duration(5000)
+                // .direction('alternate')
+                .timing('linear')
+                .duration(1250)
                 .target('#test7')
                 .animate();
 

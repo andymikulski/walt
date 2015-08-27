@@ -584,7 +584,6 @@ Copyright (c) 2015 Daniel Eden
   }
 
   0% {
-    opacity: 0;
     -webkit-transform: scale3d(.3, .3, .3);
     transform: scale3d(.3, .3, .3);
   }
@@ -600,7 +599,6 @@ Copyright (c) 2015 Daniel Eden
   }
 
   60% {
-    opacity: 1;
     -webkit-transform: scale3d(1.03, 1.03, 1.03);
     transform: scale3d(1.03, 1.03, 1.03);
   }
@@ -611,7 +609,6 @@ Copyright (c) 2015 Daniel Eden
   }
 
   100% {
-    opacity: 1;
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
   }
@@ -624,7 +621,6 @@ Copyright (c) 2015 Daniel Eden
   }
 
   0% {
-    opacity: 0;
     -webkit-transform: scale3d(.3, .3, .3);
     transform: scale3d(.3, .3, .3);
   }
@@ -640,7 +636,6 @@ Copyright (c) 2015 Daniel Eden
   }
 
   60% {
-    opacity: 1;
     -webkit-transform: scale3d(1.03, 1.03, 1.03);
     transform: scale3d(1.03, 1.03, 1.03);
   }
@@ -651,7 +646,6 @@ Copyright (c) 2015 Daniel Eden
   }
 
   100% {
-    opacity: 1;
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
   }
@@ -2108,7 +2102,6 @@ Copyright (c) 2015 Daniel Eden
     transform-origin: center;
     -webkit-transform: rotate3d(0, 0, 1, -200deg);
     transform: rotate3d(0, 0, 1, -200deg);
-    opacity: 0;
   }
 
   100% {
@@ -2116,7 +2109,6 @@ Copyright (c) 2015 Daniel Eden
     transform-origin: center;
     -webkit-transform: none;
     transform: none;
-    opacity: 1;
   }
 }
 
@@ -2126,7 +2118,6 @@ Copyright (c) 2015 Daniel Eden
     transform-origin: center;
     -webkit-transform: rotate3d(0, 0, 1, -200deg);
     transform: rotate3d(0, 0, 1, -200deg);
-    opacity: 0;
   }
 
   100% {
@@ -2134,7 +2125,6 @@ Copyright (c) 2015 Daniel Eden
     transform-origin: center;
     -webkit-transform: none;
     transform: none;
-    opacity: 1;
   }
 }
 
@@ -2633,31 +2623,87 @@ Copyright (c) 2015 Daniel Eden
 
 @-webkit-keyframes zoomIn {
   0% {
-    opacity: 0;
     -webkit-transform: scale3d(.3, .3, .3);
     transform: scale3d(.3, .3, .3);
   }
 
   50% {
-    opacity: 1;
   }
 }
 
 @keyframes zoomIn {
   0% {
-    opacity: 0;
     -webkit-transform: scale3d(.3, .3, .3);
     transform: scale3d(.3, .3, .3);
   }
 
   50% {
-    opacity: 1;
   }
 }
 
 .zoomIn {
   -webkit-animation-name: zoomIn;
   animation-name: zoomIn;
+}
+
+@-webkit-keyframes collllor {
+  0% {
+    color: #f0f;
+  }
+
+  50% {
+    color: #ff0;
+  }
+
+  100% {
+    color: #000;
+  }
+}
+
+@keyframes collllor {
+  0% {
+    color: #f0f;
+  }
+
+  50% {
+    color: #ff0;
+  }
+
+  100% {
+    color: #000;
+  }
+}
+
+.collllor {
+  -webkit-animation-name: collllor;
+  animation-name: collllor;
+}
+
+
+
+@-webkit-keyframes collllor2 {
+  0% {
+    color: #f00;
+  }
+
+  100% {
+    color: #00f;
+  }
+}
+
+@keyframes collllor2 {
+  0% {
+    color: #f00;
+  }
+
+  100% {
+    color: #00f;
+  }
+}
+
+.collllor2 {
+  -webkit-animation-name: collllor2;
+  animation-name: collllor2;
 }
 
 @-webkit-keyframes zoomInDown {

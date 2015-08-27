@@ -10,7 +10,7 @@
      * Each animation has a Walt instance associated with it,
      * containing properties for that animation definition.
      */
-    window.Walt = (function(Walt) {
+    window.Walt = (function() {
 
         /**
          * Constructor
@@ -36,7 +36,7 @@
 
         /**
          * Utility function to convert a numeric value to a milisecond string
-         * 
+         *
          * @param  {number} CSS Time value (delay/duration) to parse
          * @return {string} CSS-ified time value
          */
@@ -86,19 +86,19 @@
 
 
 
-            // 
-            // 
-            // 
+            //
+            //
+            //
             // Transformation functions
-            // 
-            // 
-            // 
+            //
+            //
+            //
 
 
 
             /**
              * Sets the current animation's element target
-             * 
+             *
              * @param  {jQuery|Element}   Element to apply the animation to
              * @return {Walt}             This Walt animation instance
              */
@@ -119,7 +119,7 @@
 
             /**
              * Set the name of the CSS animation to apply to target.
-             * 
+             *
              * @param  {string}   Name of CSS Animation
              * @return {Walt}     This Walt animation instance
              */
@@ -138,7 +138,7 @@
 
             /**
              * Set the fill mode of the CSS animation to apply to target.
-             * 
+             *
              * @param  {string}   CSS Fill mode to apply
              * @return {Walt}     This Walt animation instance
              */
@@ -157,7 +157,7 @@
 
             /**
              * Set the direction of the CSS animation to apply to target.
-             * 
+             *
              * @param  {string}   CSS direction to apply
              * @return {Walt}     This Walt animation instance
              */
@@ -176,7 +176,7 @@
 
             /**
              * Set the direction of the CSS animation to apply to target.
-             * 
+             *
              * @param  {string}   CSS direction to apply
              * @return {Walt}     This Walt animation instance
              */
@@ -195,7 +195,7 @@
 
             /**
              * Set the duration of the CSS animation to apply to target.
-             * 
+             *
              * @param  {number|string}   Duration animation should last
              * @return {Walt}            This Walt animation instance
              */
@@ -213,7 +213,7 @@
 
             /**
              * Set the delay of the CSS animation to apply to target.
-             * 
+             *
              * @param  {number|string}   Delay before animation should fire
              * @return {Walt}     This Walt animation instance
              */
@@ -231,7 +231,7 @@
 
             /**
              * Set the number of times the animation should play.
-             * 
+             *
              * @param  {number}   Number of times animation should loop before 'done'
              * @return {Walt}     This Walt animation instance
              */
@@ -249,19 +249,19 @@
 
 
 
-            // 
-            // 
-            // 
+            //
+            //
+            //
             // Event handling functions
-            // 
-            // 
-            // 
+            //
+            //
+            //
 
 
 
             /**
              * Add function to fire just before the animation takes place
-             * 
+             *
              * @param  {function}   onBefore Function
              * @return {Walt}       This Walt animation instance
              */
@@ -284,7 +284,7 @@
             /**
              * Add function to fire just before each animation item takes place
              * (This is pretty much for animation a collection of items)
-             * 
+             *
              * @param  {function}   onBeforeEach Function
              * @return {Walt}       This Walt animation instance
              */
@@ -307,7 +307,7 @@
 
             /**
              * Add function to fire just after the animation takes place
-             * 
+             *
              * @param  {function}   onAfter Function
              * @return {Walt}       This Walt animation instance
              */
@@ -329,7 +329,7 @@
 
             /**
              * `after` alias
-             * 
+             *
              * @param  {function}   onAfter Function
              * @return {Walt}       This Walt animation instance
              */
@@ -341,7 +341,7 @@
 
             /**
              * `after` alias
-             * 
+             *
              * @param  {function}   onAfter Function
              * @return {Walt}       This Walt animation instance
              */
@@ -354,7 +354,7 @@
             /**
              * Add function to fire just after each animation item takes place
              * (This is pretty much for animation a collection of items)
-             * 
+             *
              * @param  {function}   onBeforeEach Function
              * @return {Walt}       This Walt animation instance
              */
@@ -376,12 +376,12 @@
 
 
 
-            // 
-            // 
-            // 
+            //
+            //
+            //
             // Control functions
-            // 
-            // 
+            //
+            //
             //
 
 
@@ -389,7 +389,7 @@
             /**
              * Sets the current animation state to 'paused'
              * TODO: set in-progress animation state
-             * 
+             *
              * @return {Walt}       This Walt animation instance
              */
             'pause': function() {
@@ -402,7 +402,7 @@
 
             /**
              * Plays the current animation (via state = 'running')
-             * 
+             *
              * @return {Walt}       This Walt animation instance
              */
             'play': function() {
@@ -415,7 +415,7 @@
 
             /**
              * Resumes the current animation (via state = 'running')
-             * 
+             *
              * @return {Walt}       This Walt animation instance
              */
             'resume': function() {
@@ -430,7 +430,7 @@
             /**
              * Runs all of the onBefore functions,
              * then executes (begins) the animation
-             * 
+             *
              * @return {Walt}       This Walt animation instance
              */
             'animate': function() {
@@ -445,7 +445,7 @@
             /**
              * Creates a new Walt instance with all of the current animation properties.
              * Before/after events may be optionally cloned with a true/false paramater
-             * 
+             *
              * @param  {boolean}  eventsToo   Should the before/after events be copied too?
              * @return {Walt}                 New Walt animation instance
              */
@@ -468,7 +468,7 @@
             /**
              * Internal function to begin the animation
              * Creates the css shorthand string, and applies to element to kick off animations
-             * 
+             *
              * @return {Walt}       This Walt animation instance
              */
             '_executeAnim': function() {
@@ -496,7 +496,7 @@
 
             /**
              * Internal handler for 'animationend' events
-             * @param  {Event}      animationend Event object 
+             * @param  {Event}      animationend Event object
              * @return {Walt}       This Walt animation instance
              */
             '_onAnimEndEvent': function(event) {
@@ -599,8 +599,8 @@
             /**
              * Function to apply settings to the animation based on a
              * settings object passed into the function. Optionally,
-             * you may trigger an animate afterwards. 
-             * 
+             * you may trigger an animate afterwards.
+             *
              * @param  {Object} options      Key-value pairs of settings to apply to the animation.
              * @param  {Boolean} thenAnimate After applying the settings, trigger the animation
              * @param  {Boolean} shouldFork  Create a new animation, then apply these settings
@@ -726,6 +726,7 @@
                     frameStyle,
                     keyText;
 
+                // for each animation
                 for (var j = 0; j < animationCollection.length; j++) {
 
                     currentAnimation = animationCollection[j];
@@ -733,7 +734,6 @@
                     // for each frame int he found animation
                     if (currentAnimation && currentAnimation.cssRules) {
                         for (thisFrame in currentAnimation.cssRules) {
-
                             if (thisFrame && currentAnimation[thisFrame]) {
                                 // get the corresponding keyframe %
                                 frame = currentAnimation[thisFrame];
@@ -745,23 +745,89 @@
                                     existingFrame = compiledAnimation[keyText[k]] || {};
 
                                     // for each frame we need to check the CSS style and save any relevant changes
-                                    for (frameStyle in frame.style) {
-                                        if (typeof frame.style[frameStyle] === 'string' && frame.style[frameStyle] !== '' && frameStyle !== 'cssText' && frameStyle !== 'length' && !anim.isNumber(frameStyle)) {
+                                    for (styleProp in frame.style) {
+                                        var propSlug = styleProp.toLowerCase();
+                                        /**
+                                         * Value of the targeted style for this animation frame
+                                         * @type {string}
+                                         */
+                                        var newStyleValue = frame.style[styleProp];
 
-                                            if (existingFrame[frameStyle] && existingFrame[frameStyle] !== '') {
-                                                if (anim.isNumber(existingFrame[frameStyle])) {
-                                                    existingFrame[frameStyle] = Number(existingFrame[frameStyle]) + Number(frame.style[frameStyle]);
-                                                } else {
-                                                    // combining a string-based attribute
-                                                    if (frameStyle.toLowerCase().indexOf('transform') > -1) {
-                                                        // if it's a transform we need to do some weird stuff to it
-                                                        var transformStyle = existingFrame[frameStyle].split(' ');
-                                                    }
+                                        // if the value exists, is not empty,
+                                        // and the property for the value isn't cssText or length
+                                        // (since those aren't real props we need for animation)
+                                        // then we continue on
+                                        if (!anim.isNumber(styleProp) && newStyleValue && typeof newStyleValue === 'string' && newStyleValue !== '' && styleProp !== 'cssText' && styleProp !== 'length') {
+                                            /**
+                                             * Existing value for this style for htis anim frame
+                                             * @type {string}
+                                             */
+                                            var existingStyleValue = existingFrame[styleProp] || '';
 
-                                                    existingFrame[frameStyle] += frame.style[frameStyle];
+                                            if (existingStyleValue && existingStyleValue !== '') {
+                                                // at this point, we have new style value coming in,
+                                                // and an existing style value.
+                                                // from here we'll case out the different ways to merge properties
+
+                                                switch (true) {
+                                                    // transform
+                                                    // we just add them together ('transform': 'rotateX(10deg) scale(2,1,1) rotateX(5deg)' etc)
+                                                    case (propSlug.indexOf('transform', propSlug.length - 'transform'.length) !== -1):
+                                                        existingStyleValue += ' ' + newStyleValue;
+                                                        existingStyleValue = existingStyleValue.replace(/none/g, '');
+                                                        break;
+
+                                                        // some sort of color property
+                                                    case (propSlug.indexOf('color') > -1):
+                                                        var getRgbColor = function(input) {
+                                                            var div = document.createElement('div'),
+                                                                m;
+                                                            div.style.color = input;
+                                                            m = div.style.color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
+                                                            if (m) {
+                                                                return [m[1], m[2], m[3]];
+                                                            } else {
+                                                                return null;
+                                                            }
+                                                        };
+
+                                                        // try to grub the existing colors
+                                                        var existingColor = getRgbColor(existingStyleValue),
+                                                            newColor = getRgbColor(newStyleValue);
+
+
+                                                        // if we have 2 different colors, we need to merge them
+                                                        if (existingColor && newColor) {
+                                                            var newR = Math.round((existingColor[0] + newColor[0]) / 2),
+                                                                newG = Math.round((existingColor[1] + newColor[1]) / 2),
+                                                                newB = Math.round((existingColor[2] + newColor[2]) / 2),
+                                                                mergedColor = 'rgb(' + newR + ',' + newG + ',' + newB + ')';
+                                                            // boom new color
+                                                            existingStyleValue = mergedColor;
+                                                        } else {
+                                                            // one of them was an issue so we'll just set it to whatever the valid color is
+                                                            existingStyleValue = existingColor || newColor;
+                                                        }
+                                                        break;
+
+                                                        // a numeric value (averaged together)
+                                                    case (anim.isNumber(newStyleValue)):
+                                                        existingStyleValue = (Number(existingStyleValue) + Number(newStyleValue)) / 2;
+                                                        break;
+
+                                                        // anything else is just concatenated
+                                                    default:
+                                                        existingStyleValue += ' ' + newStyleValue;
+                                                        console && console.warn && console.warn('Walt : unhandled merge', styleProp, existingStyleValue);
+                                                        break;
                                                 }
+                                            } else {
+                                                // there is no existing style value,
+                                                // so just use the new one coming in
+                                                existingStyleValue = newStyleValue;
                                             }
-                                            existingFrame[frameStyle] = frame.style[frameStyle];
+
+                                            existingFrame[styleProp] = existingStyleValue;
                                         }
                                     }
                                     compiledAnimation[keyText[k]] = existingFrame;
@@ -787,7 +853,7 @@
                 // if there aren't any animations just return out
                 if (!foundAnimations || !foundAnimations.length) {
                     console && console.warn && console.warn('Walt : compose : no animations found', animations);
-                    return;
+                    return anim;
                 }
 
                 var mergedAnimations = anim._mergeAnimationKeyframes(foundAnimations),
@@ -849,7 +915,7 @@
         };
 
         return Walt;
-    })(window.Walt || {});
+    })();
 
     // Walt 1.x support
     // mimics Walt as a singleton
