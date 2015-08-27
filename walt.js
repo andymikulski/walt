@@ -773,8 +773,13 @@
                                                     // transform
                                                     // we just add them together ('transform': 'rotateX(10deg) scale(2,1,1) rotateX(5deg)' etc)
                                                     case (propSlug.indexOf('transform', propSlug.length - 'transform'.length) !== -1):
-                                                        existingStyleValue += ' ' + newStyleValue;
                                                         existingStyleValue = existingStyleValue.replace(/none/g, '');
+                                                        existingStyleValue += ' ' + newStyleValue.replace(/none/g, '');
+                                                        existingStyleValue = existingStyleValue.trim();
+
+                                                        if (!existingStyleValue || existingStyleValue === '') {
+                                                            existingStyleValue = 'none';
+                                                        }
                                                         break;
 
                                                         // some sort of color property
