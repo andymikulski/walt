@@ -1,6 +1,6 @@
 /*!
  * WaltJS 2.0
- * @author Andy Mikulski <andy@mondorobot.com>
+ * @author Andy Mikulski <github.com/andymikulski>
  */
 ;
 (function(window, document, $, async, undefined) {
