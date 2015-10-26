@@ -508,14 +508,14 @@
                 // reset the target css by just passing in null values for the properties
                 $target.css(_createCssObj());
 
-                // up the 'completed' count
-                anim.animCount += 1;
-
                 // fire afterEach for each one
                 async.parallel(anim.onAfterEaches, function() {
+                    // up the 'completed' count
+                    anim.animCount += 1;
+
                     // if we've finished animating all our items,
                     // then we can trigger the 'totally done' handler
-                    if (anim.animCount >= anim.animMax) {
+                    if (anim.animCount > anim.animMax) {
                         anim._onAnimComplete();
                     }
                 });
