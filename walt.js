@@ -515,7 +515,7 @@
                 async.parallel(anim.onAfterEaches, function() {
                     // if we've finished animating all our items,
                     // then we can trigger the 'totally done' handler
-                    if (anim.animCount > anim.animMax) {
+                    if (anim.animCount >= anim.animMax) {
                         anim._onAnimComplete();
                     }
                 });
